@@ -10,4 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JourneyRepository extends JpaRepository<Journey, JourneyId> {
+
+    @Query("""
+            select new cat.tecnocampus.fgcstations.application.DTOs.JourneyDTO(j.origin.name, j.id.destinationName)
+            from Journey j
+            """)
+    List<JourneyDTO> findAllRawDTO();
+
+    @Query("""
+            select j
+            from Journey j
+            """)
+    Optional<JourneyId> findByIdJourneyId(JourneyId journeyId);
 }
